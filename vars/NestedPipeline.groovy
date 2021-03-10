@@ -16,11 +16,11 @@ def call(body) {
           stage( 'Build Project A' ) {
             steps {
               dir( 'subProjectA' ) {
-                MPLModule('Maven Build', [ // Using overriden Maven Build
+                MPLModule('Maven Build' /*, [ // Using overriden Maven Build
                   maven: [
                     tool_version: 'Maven 2'
                   ]
-                ])
+                ]*/)
               }
             }
           }
