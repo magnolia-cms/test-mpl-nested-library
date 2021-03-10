@@ -1,4 +1,4 @@
-package com.company.nestedlib.testing
+package info.magnolia.jenkins.testing
 
 import static com.lesfurets.jenkins.unit.global.lib.LibraryConfiguration.library
 import static com.lesfurets.jenkins.unit.global.lib.LocalSource.localSource

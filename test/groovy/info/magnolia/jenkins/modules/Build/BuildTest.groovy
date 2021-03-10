@@ -3,7 +3,7 @@ import org.junit.Test
 
 import static org.assertj.core.api.Assertions.assertThat
 
-import com.company.nestedlib.testing.NestedLibTestBase
+import info.magnolia.jenkins.testing.NestedLibTestBase
 
 class BuildTest extends NestedLibTestBase {
   def script = null
