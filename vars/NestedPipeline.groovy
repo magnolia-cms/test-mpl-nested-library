@@ -12,6 +12,8 @@ def call(body) {
     }
     stages {
 
+      // stage('Debug') { steps { echo "${CFG}" } }
+
       // TODO: get scripts and mount volume
 
       stage('verify build relevance') { steps { echo "verify build relevance" } }
