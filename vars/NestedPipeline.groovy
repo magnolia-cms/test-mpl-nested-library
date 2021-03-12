@@ -12,12 +12,7 @@ def call(body) {
     }
     stages {
 
-      stage('checkout') {
-        steps {
-          MPLModule('Checkout')
-          // TODO: get scripts and mount volume
-        }
-      }
+      // TODO: get scripts and mount volume
 
       stage('verify build relevance') { steps { echo "verify build relevance" } }
 
