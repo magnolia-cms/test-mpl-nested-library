@@ -12,6 +12,9 @@ def call(body) {
     agent {
       label 'master'
     }
+    triggers {
+      cron CFG.cron
+    }
     stages {
 
       // TODO: get scripts and mount volume
