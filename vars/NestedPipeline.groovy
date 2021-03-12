@@ -31,21 +31,21 @@ def call(body) {
       stage('Binary compatibility') {
         when { expression { MPLModuleEnabled() } }
         steps {
-          MPLModule('BinaryCompatibility')
+          MPLModule()
         }
       }
 
       stage('Dependency analysis') {
         when { expression { MPLModuleEnabled() } }
         steps {
-          MPLModule('DependencyAnalysis')
+          MPLModule()
         }
       }
 
       stage('JIRA Health') {
         when { expression { MPLModuleEnabled() } }
         steps {
-          MPLModule('JiraHealth')
+          MPLModule()
         }
       }
 
