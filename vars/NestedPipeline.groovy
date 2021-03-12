@@ -5,6 +5,8 @@ def call(body) {
   // Init the MPL library
   MPLInit()
 
+  MPLPipelineConfig(body, [modules: [Build: [:], BinaryCompatibility: [:], DependencyAnalysis: [:], JiraHealth: [:]]])
+
   // Executing the pipeline without additional configuration
   pipeline {  // Declarative pipeline
     agent {
