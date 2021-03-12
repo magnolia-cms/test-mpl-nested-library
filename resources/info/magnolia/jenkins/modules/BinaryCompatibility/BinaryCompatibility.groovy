@@ -1,0 +1,1 @@
+echo "Binary Compatibility"

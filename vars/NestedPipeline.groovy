@@ -11,29 +11,47 @@ def call(body) {
       label 'master'
     }
     stages {
-      stage( 'Build' ) {
-        parallel {        // Parallel build for 2 subprojects
-          stage( 'Build Project A' ) {
-            steps {
-              dir( 'subProjectA' ) {
-                MPLModule('Maven Build' /*, [ // Using overriden Maven Build
-                  maven: [
-                    tool_version: 'Maven 2'
-                  ]
-                ]*/)
-              }
-            }
-          }
-          stage( 'Build Project B' ) {
-            steps {
-              dir( 'subProjectB' ) {
-                // Custom build process (it's better to put it into the project custom module
-                sh 'touch file.test'
-              }
-            }
-          }
+
+      stage('checkout') {
+        steps {
+          MPLModule('Checkout')
+          // TODO: get scripts and mount volume
         }
       }
+
+      stage('verify build relevance') { steps { echo "verify build relevance" } }
+
+      stage('build & deploy / build PR') {
+        steps {
+          MPLModule('Maven Build' /*, [ // Using overriden Maven Build
+            maven: [
+              tool_version: 'Maven 2'
+            ]
+          ]*/)
+        }
+      }
+
+      stage('Binary compatibility') {
+        when { expression { MPLModuleEnabled() } }
+        steps {
+          MPLModule('BinaryCompatibility')
+        }
+      }
+
+      stage('Dependency analysis') {
+        when { expression { MPLModuleEnabled() } }
+        steps {
+          MPLModule('DependencyAnalysis')
+        }
+      }
+
+      stage('JIRA Health') {
+        when { expression { MPLModuleEnabled() } }
+        steps {
+          MPLModule('JiraHealth')
+        }
+      }
+
     }
   }
 }
