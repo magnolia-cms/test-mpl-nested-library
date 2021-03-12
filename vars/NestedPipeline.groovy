@@ -14,7 +14,7 @@ def call(body) {
     }
     stages {
 
-      stage('Debug') { steps { echo "${MPL}" } }
+      stage('Debug') { steps { echo "${MPL.moduleEnabled('DependencyAnalysis')}" } }
 
       // TODO: get scripts and mount volume
 
