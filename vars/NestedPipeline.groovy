@@ -20,11 +20,11 @@ def call(body) {
 
       stage('build & deploy / build PR') {
         steps {
-          MPLModule('Maven Build' /*, [ // Using overriden Maven Build
+          MPLModule('Maven Build', [
             maven: [
-              tool_version: 'Maven 2'
+              tool_version: 'Maven 3'
             ]
-          ]*/)
+          ])
         }
       }
 
