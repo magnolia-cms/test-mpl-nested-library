@@ -14,7 +14,7 @@ def call(body) {
     }
     stages {
 
-      // stage('Debug') { steps { echo "${CFG}" } }
+      stage('Debug') { steps { echo "${MPL}" } }
 
       // TODO: get scripts and mount volume
 
