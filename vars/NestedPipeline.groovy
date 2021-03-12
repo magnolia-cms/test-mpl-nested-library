@@ -5,16 +5,19 @@ def call(body) {
   // Init the MPL library
   MPLInit()
 
-  def MPL = MPLPipelineConfig(body, [modules: [Build: [:], BinaryCompatibility: [:], DependencyAnalysis: [:], JiraHealth: [:]]])
+  def MPL = MPLPipelineConfig(body, [
+    cron: '',
+    modules: [Build: [:], BinaryCompatibility: [:], DependencyAnalysis: [:], JiraHealth: [:]]
+  ])
 
   // Executing the pipeline without additional configuration
   pipeline {  // Declarative pipeline
     agent {
       label 'master'
     }
-    triggers {
-      cron CFG.cron
-    }
+    // triggers {
+    //   cron MPL.cron
+    // }
     stages {
 
       // TODO: get scripts and mount volume
