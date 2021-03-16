@@ -15,9 +15,9 @@ def call(body) {
     agent {
       label 'master'
     }
-    // triggers {
-    //   cron MPL.cron
-    // }
+    triggers {
+      cron MPL.cron
+    }
     stages {
 
       stage('Debug') { steps { echo "${MPL}" } }
