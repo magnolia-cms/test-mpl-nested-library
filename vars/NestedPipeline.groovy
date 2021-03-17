@@ -28,7 +28,7 @@ def call(body) {
 
       stage('build & deploy / build PR') {
         steps {
-          MPLModule('Maven Build', [
+          MPLModule('Build', [
             maven: [
               tool_version: 'Maven 3'
             ]
