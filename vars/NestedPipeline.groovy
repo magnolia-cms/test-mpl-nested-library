@@ -16,7 +16,7 @@ def call(body) {
       label 'master'
     }
     triggers {
-      cron MPL.cron
+      cron MPL.config.cron
     }
     stages {
 
