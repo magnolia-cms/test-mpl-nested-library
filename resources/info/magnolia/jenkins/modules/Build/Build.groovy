@@ -1,4 +1,4 @@
-if(sh(script: 'test -f pom.xml', returnStatus: true) == 0)
+if(fileExists('pom.xml'))
   MPLModule('Maven Build', CFG)
-else if (sh(script: 'test -f package.json', returnStatus: true) == 0)
+else if (fileExists('package.json'))
   MPLModule('Node Build', CFG)

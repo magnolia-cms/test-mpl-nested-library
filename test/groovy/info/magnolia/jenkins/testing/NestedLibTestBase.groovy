@@ -39,6 +39,6 @@ abstract class NestedLibTestBase extends MPLTestBase {
 
     // Here you can put some common allowed methods for all the tests
 
-    MPLManager.instance.addModulesLoadPath('com/company/nestedlib')
+    MPLManager.instance.addModulesLoadPath('info/magnolia/jenkins')
   }
 }

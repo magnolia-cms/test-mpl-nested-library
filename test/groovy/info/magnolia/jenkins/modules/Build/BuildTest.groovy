@@ -14,55 +14,61 @@ class BuildTest extends NestedLibTestBase {
     super.setUp()
 
     helper.registerAllowedMethod('fileExists', [String.class], null)
-    helper.registerAllowedMethod('tool', [String.class], { name -> "${name}_HOME" })
-    helper.registerAllowedMethod('withEnv', [List.class, Closure.class], null)
+    // helper.registerAllowedMethod('tool', [String.class], { name -> "${name}_HOME" })
+    // helper.registerAllowedMethod('withEnv', [List.class, Closure.class], null)
 
     script = loadScript('MPLModule.groovy')
   }
 
   @Test
-  void default_run() throws Exception {
+  void testsProjectType() throws Exception {
+    // GIVEN
+
+    // WHEN
     script.call('Build')
     printCallStack()
 
+    // THEN
     assertThat(helper.callStack
-      .findAll { c -> c.methodName == 'echo' }
-      .any { c -> c.argsToString().contains('''It's overridden MavenBuild started''') }
+      .findAll { c -> c.methodName == 'fileExists' }
+      .any { c -> c.argsToString().contains('pom.xml') }
     ).isTrue()
-
     assertThat(helper.callStack
-      .findAll { c -> c.methodName == 'sh' }
-      .any { c -> c.argsToString().contains('''Let's do something important''') }
+      .findAll { c -> c.methodName == 'fileExists' }
+      .any { c -> c.argsToString().contains('package.json') }
     ).isTrue()
-
     assertJobStatusSuccess()
   }
 
   @Test
-  void change_tool_and_option() throws Exception {
-    script.call('Build', [
-      maven: [
-        tool_version: 'Maven 2',
-        additional_option: 'Loooool'
-      ]
-    ])
+  void runsMavenBuildWhenPomXmlPresent() throws Exception {
+    // GIVEN
+    helper.registerAllowedMethod('fileExists', [String.class], { file -> file.equals('pom.xml') ? true : false })
+
+    // WHEN
+    script.call('Build')
     printCallStack()
 
+    // THEN
     assertThat(helper.callStack
-      .findAll { c -> c.methodName == 'tool' }
-      .any { c -> c.argsToString().contains('Maven 2') }
+      .findAll { c -> c.methodName == 'echo' }
+      .any { c -> c.argsToString().contains('MavenBuild') }
     ).isTrue()
+  }
 
+  @Test
+  void runsNodeBuildWhenPackageJsonPresent() throws Exception {
+    // GIVEN
+    helper.registerAllowedMethod('fileExists', [String.class], { file -> file.equals('package.json') ? true : false })
+
+    // WHEN
+    script.call('Build')
+    printCallStack()
+
+    // THEN
     assertThat(helper.callStack
-      .findAll { c -> c.methodName == 'sh' }
-      .any { c -> c.argsToString().contains('''Let's do Loooool''') }
+      .findAll { c -> c.methodName == 'echo' }
+      .any { c -> c.argsToString().contains('Node Build') }
     ).isTrue()
-
-    assertThat(helper.callStack
-      .findAll { c -> c.methodName == 'sh' }
-      .any { c -> c.argsToString().contains('''Let's do something important''') }
-    ).isFalse()
-
-    assertJobStatusSuccess()
   }
 }
